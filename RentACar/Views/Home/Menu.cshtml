@@ -1,0 +1,22 @@
+﻿@{
+    ViewBag.Title = "Menu";
+}
+
+<div class="row">
+    <div class="col-md-6 margin-top-20">
+        <a href="@Url.Action("Index", "Home")" class="btn btn-primary btn-large btn-block">
+            <span class="glyphicon glyphicon-plus"></span>Rent a car
+        </a>
+        <a href="@Url.Action("Rented", "RentManagers", new {rentManagerId = ViewBag.RentManagerId})" class="btn btn-primary btn-large btn-block">
+            <span class="glyphicon glyphicon-hourglass"></span>Rented cars
+        </a>
+    </div>
+    <div class="col-md-6 margin-top-20">
+        <a href="@Url.Action("Details", "RentManagers")" class="btn btn-primary btn-large btn-block">
+            <span class="glyphicon glyphicon-lock"></span>Account
+        </a>
+        <a href="@Url.Action("Contact", "Home")" class="btn btn-primary btn-large btn-block">
+            <span class="glyphicon glyphicon-envelope"></span>Contact
+        </a>
+    </div>
+</div>

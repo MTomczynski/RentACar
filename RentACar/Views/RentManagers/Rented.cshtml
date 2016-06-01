@@ -1,0 +1,71 @@
+﻿@using Newtonsoft.Json
+@model IEnumerable<RentACar.Models.CarRental.Rent>
+
+@{
+    ViewBag.Title = "Rented";
+}
+
+<h2>History of rented cars</h2>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <td><strong>Car</strong></td>
+            <td><strong>Price</strong></td>
+            <td><strong>Rent date</strong></td>
+            <td><strong>Return date</strong></td>
+            <td><strong>Payment accepted</strong></td>
+        </tr>
+    </thead>
+    <tbody data-bind="foreach:currentRents">
+        <tr>
+            <td data-bind="text:Car.Name"></td>
+            <td data-bind="text:formattedPrice(PriceToPay)"></td>
+            <td data-bind="text: moment(DateRent).format('LL')"></td>
+            <td data-bind="text: moment(DateReturn).format('LL')"></td>
+            <td data-bind="text: RentAccepted"></td>
+        </tr>
+    </tbody>
+    <tbody>
+        <tr>
+            <td colspan="2">
+                <span data-bind="click:previousPage, visible:currentPage() > 1" class="glyphicon glyphicon-circle-arrow-left" style="cursor:pointer;"></span>
+                <span data-bind="text:currentPage"></span>
+                <span data-bind="click:nextPage, visible:currentPage() < lastPage" class="glyphicon glyphicon-circle-arrow-right" style="cursor:pointer;"></span>
+            </td>
+        </tr>
+    </tbody>
+</table>
+<script src="~/Scripts/moment.js"></script>
+<script src="~/Scripts/knockout-3.4.0.js"></script>
+<script>
+    function formattedPrice(priceToPay) {
+        var price = priceToPay.toFixed(2)
+        return price;
+    }
+
+    function RentedViewModel() {
+        var self = this;
+
+        // properties
+        self.rents = @Html.Raw(JsonConvert.SerializeObject(Model, new JsonSerializerSettings {ReferenceLoopHandling = ReferenceLoopHandling.Ignore})); //TODO: embed rents from server as a JSON array
+        self.pageSize = 10;
+        self.lastPage = Math.ceil(self.rents.length / self.pageSize);
+        self.currentPage = ko.observable (1);
+        self.currentRents = ko.computed(function(){
+            var startIndex = (self.currentPage() - 1) * self.pageSize;
+            var endIndex = startIndex + self.pageSize;
+            return self.rents.slice(startIndex, endIndex);
+        });
+
+        // methods
+        self.nextPage = function(){
+            self.currentPage(self.currentPage() + 1);
+        };
+        self.previousPage = function(){
+            self.currentPage(self.currentPage() - 1);
+        };
+    };
+
+    ko.applyBindings(new RentedViewModel());
+</script>

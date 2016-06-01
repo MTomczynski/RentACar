@@ -1,0 +1,56 @@
+﻿@model IEnumerable<RentACar.Models.CarRental.Rent>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Car.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RentManager.UserFirstName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PriceToPay)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DateRent)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DateReturn)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Car.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.RentManager.UserFirstName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PriceToPay)
+        </td>
+        <td>
+            @item.DateRent.ToShortDateString()
+        </td>
+        <td>
+            @item.DateReturn.ToShortDateString()
+        </td>
+        <td>
+            @Html.ActionLink("Details", "Details", new { id=item.RentId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.RentId })
+        </td>
+    </tr>
+}
+
+</table>

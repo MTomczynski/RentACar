@@ -1,0 +1,54 @@
+﻿@{
+    ViewBag.Title = "Contact";
+}
+<h2>@ViewBag.Title.</h2>
+
+<address>
+    F. Tańcula<br/>
+    M. Tomczyński<br/>
+    Car rental<br/>
+    Ulica Sezamkowa<br/>
+    <abbr title="Phone">Phone:</abbr>
+    666-666-666
+</address>
+
+<address>
+    <strong>Support:</strong> <a href="mailto:Support@example.com">Support@example.com</a>
+</address>
+
+<div id="formSection">
+    <h3>@ViewBag.Message</h3>
+    <form method="post" id="contactForm">
+        <textarea name="message" id="message" maxlength="150" data-bind="value:message,valueUpdate:'input'"></textarea>
+        <input type="submit" value="Send" />
+        <span data-bind="text:charactersRemaining"></span> characters remaining
+    </form>
+    <img src="~/Content/images/wait_progress.gif" id="progress" style="display: none" />
+</div>
+
+@*Added setTimeout before function to add some delay*@
+@section scripts
+{
+    <script src="~/Scripts/knockout-3.4.0.js"></script>
+    <script>
+        function ContactViewModel() {
+            var self = this;
+            self.message = ko.observable('');
+            self.charactersRemaining = ko.computed(function() {
+                return 150 - self.message().length;
+            });
+        }
+
+        ko.applyBindings(new ContactViewModel());
+    </script>
+
+    <script>
+        $('#contactForm').submit(function () {
+            $('#progress').show();
+            $.post('', { message: $('#message').val() }).done(function(response) {
+                setTimeout(function() { $('#formSection').html(response); }, 2000);
+            });
+            return false;
+        });
+    </script>
+}
