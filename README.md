@@ -1,6 +1,4 @@
 # RentACar_v2
-Aplikacja symulujaca dzialanie wypozyczalni samochodowej.
-http://car-rental-uek.azurewebsites.net/
 
 1. Zaloz konto w aplikacji.
 2. Wybierz z listy dostepnych samochodow interesujacy Cie model.
