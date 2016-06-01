@@ -1,4 +1,4 @@
-# RentACar_v2
+# RentACar
 
 1. Zaloz konto w aplikacji.
 2. Wybierz z listy dostepnych samochodow interesujacy Cie model.
